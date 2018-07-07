@@ -1,3 +1,7 @@
 # blog
 
-*This repository is used to record my work!!*
+## This repository is used to record my work
+
+Lorem ipsumdolor!
+
+## section
