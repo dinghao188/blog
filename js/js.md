@@ -1,12 +1,14 @@
 # JavaScript，Html相关的那些事
 
 ## 一、JS基本语法
+
 - JS是一种解释性的脚本语言，没有编译的过程，与Python，Matlab等相似
 - JS中一切都是Objct（对象）
 - 基本数据类型有：number,string,boolean,null,undefined
 - 常用对象有：Number,Math,String,Date,Array
 
 ## 二、JS与Html DOM
+
 - 每个载入浏览器的HTML都会成为Document对象
 - HTML DOM中每个部分都是节点
     1. 文档本身是*文档(Document对象)节点*
@@ -17,6 +19,7 @@
 - 要操作相应的节点，只需通过相应的节点对象调用对应的方法即可
 
 ## 三、原生的JS Ajax操作
+
     //声明变量，用于存放XMLHttpRequest(用于ajax请求的核心对象)
     var http;
     //创建对象
@@ -42,5 +45,3 @@
             //请求失败
         }
     }
-
-    
