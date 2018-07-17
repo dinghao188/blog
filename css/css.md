@@ -20,5 +20,4 @@
                 <p>Do you see this?</p>
             </div>
         </div>
-![GitHub Logo](/images/logo.png)
-![Example](url)
+![]()
