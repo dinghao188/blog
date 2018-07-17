@@ -21,3 +21,13 @@
             </div>
         </div>
    ![Example](css1.png)
+
+## 2. 因子元素设置浮动而引起的高度坍塌问题
+
+- 利用clearfix类，在父元素的最末添加一个块元素清除前面的子元素设置float造成的影响。代码如下
+
+        .clearfix:after{
+            display:block;
+            clear:both;
+            content:"";
+        }
