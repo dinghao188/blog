@@ -6,6 +6,7 @@
 - JS中一切都是Objct（对象）
 - 基本数据类型有：number,string,boolean,null,undefined
 - 常用对象有：Number,Math,String,Date,Array
+- JS中内置了global对象，函数调用时，若没有明确的调用对象，则函数内的this均指向global对象
 
 ## 二、JS与Html DOM
 
