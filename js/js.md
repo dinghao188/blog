@@ -10,9 +10,15 @@
 
 - 对象是类的实例化结果,类可以被继承。
 
-- 常用内置对象有:Object,Number,Math,String,Date,Array,Global,Function等，它们它们都是函数对象，也可以叫做类。
+- 常用内置对象有:Number,Math,String,Date,Array,Global,Object,Function等，它们都是函数对象，也可以叫做类。
+- 两个特殊的对象：Object和Function.
+    1. Object特殊之处在于Object.prototype是凭空出来的。语法上，所有{}都会被解释为new Object().
 
-- 类与对象之间的关系通过原型链串起来:所有类(函数对象假定为FunctionClass)都有一个原型对象(假定为proto_obj),简单来说就是FunctionClass.prototype=proto_obj，proto_obj.constructor=FunctionClass,再假设FunctionClass的一个实例化对象为new_obj,则有new_obj.__proto__=proto_obj;由于proto_obj是Object类实例化而来，所以必定有proto_obj.__proto__=Object.prototype。详情见[继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)。
+    2. Function特殊在__proto__=prototype.语法上所有函数声明都会被解释为new Function().
+
+    3. 以上列出的所有对象，当其作为Function的实例化对象时，其__proto__均指向Function的prototype,但是其本身的prototype仍然指代该类的原型对象，且prototype.--proto--指向Object的prototype。类型扩展时规律相同。
+
+- 类与对象之间的关系通过原型链串起来:详情见[继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)。
 
 - JS中内置了Global对象，函数调用时，若没有明确的调用对象，则函数内的this均指向Global对象
 
