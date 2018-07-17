@@ -3,10 +3,18 @@
 ## 一、JS基本语法
 
 - JS是一种解释性的脚本语言，没有编译的过程，与Python，Matlab等相似
-- JS中一切都是Objct（对象）
-- 基本数据类型有：number,string,boolean,null,undefined
-- 常用对象有：Number,Math,String,Date,Array
-- JS中内置了global对象，函数调用时，若没有明确的调用对象，则函数内的this均指向global对象
+
+- 基本数据类型有：object,function,number,string,boolean,null,undefined
+
+- 函数是第一等对象
+
+- 对象是类的实例化结果,类可以被继承。
+
+- 常用内置对象有:Object,Number,Math,String,Date,Array,Global,Function等，它们它们都是函数对象，也可以叫做类。
+
+- 类与对象之间的关系通过原型链串起来:所有类(函数对象假定为FunctionClass)都有一个原型对象(假定为proto_obj),简单来说就是FunctionClass.prototype=proto_obj，proto_obj.constructor=FunctionClass,再假设FunctionClass的一个实例化对象为new_obj,则有new_obj.__proto__=proto_obj;由于proto_obj是Object类实例化而来，所以必定有proto_obj.__proto__=Object.prototype。详情见[继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)。
+
+- JS中内置了Global对象，函数调用时，若没有明确的调用对象，则函数内的this均指向Global对象
 
 ## 二、JS与Html DOM
 

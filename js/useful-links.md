@@ -6,4 +6,4 @@
 
 ## 1. [继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
->详细介绍了有关JavaScript中继承与原型链这一概念，以及在面向对象中的应用方法。
+>详细介绍了有关JavaScript中继承与原型链这一概念，以及在面向对象中的应用方法。类就是函数对象，类的继承和实例化关系通过原型链组织起来。
