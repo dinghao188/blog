@@ -8,9 +8,8 @@
 
 - 函数是第一等对象
 
-- 对象是类的实例化结果,类可以被继承。
+- 常用内置对象有:Number,Math,String,Date,Array,global,Object,Function等，它们都是函数对象(global除外，他是Object的实例对象)，也可以叫做类。
 
-- 常用内置对象有:Number,Math,String,Date,Array,Global,Object,Function等，它们都是函数对象，也可以叫做类。
 - 两个特殊的对象：Object和Function.
     1. Object特殊之处在于Object.prototype是凭空出来的。语法上，所有{}都会被解释为new Object().
 
@@ -18,6 +17,30 @@
 
     3. 以上列出的所有对象，当其作为Function的实例化对象时，其__proto__均指向Function的prototype,但是其本身的prototype仍然指代该类的原型对象，且prototype.--proto--指向Object的prototype。类型扩展时规律相同。
 
+- JS的函数中的**this**，以及apply,call,和bind对this引用的影响
+    1. 所有函数若没有明确指出调用它的对象，则this默认均指向global对象。
+
+    2. 使用new调用函数时，会返回该函数的实例对象，即便函数里加了返回语句。
+
+    3. 使用apply，call和bind可改变函数内this引用的对象，如下代码所示
+
+            function bark(){
+                console.log("I am a "+this.name);
+            }   //工具函数
+            var dog = {
+                name:'dog'
+            }   //怎样通过dog对象正确调用bark函数输出‘I am a dog’？？？？
+
+            //1. 假定希望调用的函数为function，希望调用该函数的对象为thisObj，则通过function.call(thisObj,参数列表)可以实现，对于该例子就是：
+            bark.call(dog);
+
+            //2. 对于apply调用形式如下function.apply(thisObj,[参数列表])
+            bark.apply(dog);
+            //可见call与apply唯一的区别在于参数列表的形式不同，call通过多个形式参数传参，apply通过数组传参。注意：参数顺序均要与原先的顺序一一对应。
+
+            //3. function.bind(thisObj);bind与前两者的不同之处在于其返回值是函数，故需要调用返回的函数才能完成功能，其参数可像call一样传递，也可以传给返回的函数。
+            bark.bind(dog)();
+        ![call](output1.png)
 - 类与对象之间的关系通过原型链串起来:详情见[继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)。
 
 - JS中内置了Global对象，函数调用时，若没有明确的调用对象，则函数内的this均指向Global对象
