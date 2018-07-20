@@ -31,3 +31,10 @@
             clear:both;
             content:"";
         }
+- 给父元素设置固定的宽度和高度
+
+## 3. line-height的效果
+
+- 默认情况下，子元素会继承父元素的line-height
+- line-height直接表现在文本区域从而层层产生影响
+- line-height表现出来的效果与其值与字体大小(font-size)有关，若line-height大于字体的高度，则就会使文本居中.
