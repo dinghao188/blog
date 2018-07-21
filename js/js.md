@@ -84,7 +84,7 @@
         }
     }
 
-## 四、JQuery Ajax操作
+## 四、JQuery(一个优秀的开源JS库) Ajax操作
 
 >### 1. $.ajax([settings])
 >>settings是可选参数。用于配置ajax请求的键值对集合。可以通过$.ajaxSetup()设置任何选项的默认值。常用选项如下:
