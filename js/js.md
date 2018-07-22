@@ -41,6 +41,8 @@
             //3. function.bind(thisObj);bind与前两者的不同之处在于其返回值是函数，故需要调用返回的函数才能完成功能，其参数可像call一样传递，也可以传给返回的函数。
             bark.bind(dog)();
         ![call](output1.png)
+
+        **感觉有点面向切面编程的意思**，
 - 类与对象之间的关系通过原型链串起来:详情见[继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)。
 
 - JS中内置了Global对象，函数调用时，若没有明确的调用对象，则函数内的this均指向Global对象
