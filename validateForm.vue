@@ -1,7 +1,7 @@
 <template>
   <div class="validate_container">
     <form class="validate_form">
-      <section v-if="needWhat.phoneNumber" class="input_container" id="phoneInputContainer">
+      <section v-if="InputNeed.PHONE_NUMBER" class="input_container" id="phoneInputContainer">
         <div class="image_in_input">
           <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-login-account"></use></svg>
         </div>
@@ -10,7 +10,7 @@
           <svg class="s_svg clear-icon" v-show="phoneNumber" @click="clearInput('phoneNumber')"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-login-clear"></use></svg>
         </div>
       </section>
-      <section v-if="needWhat.imgCode" class="input_container" id="imgCodeContainer">
+      <section v-if="InputNeed.IMG_CODE" class="input_container" id="imgCodeContainer">
         <div class="image_in_input">
           <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-register-img"></use></svg>
         </div>
@@ -18,15 +18,15 @@
         <div class="image_in_input">
           <svg class="s_svg clear-icon" v-show="imgCode" @click="clearInput('imgCode')"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-login-clear"></use></svg>
         </div>
-        <button class="img_code_get">
+        <button v-if="!authImg" @click.prevent="getImgCode" class="img_code_get">
           <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-register-refresh"></use></svg>
           <span class="btn_txt">点击刷新</span>
         </button>
-        <!-- <button class="img_code_get">
-          <img class="img_code" :src="img">
-        </button> -->
+        <button v-if="authImg" @click.prevent="getImgCode" class="img_code_get">
+          <img class="img_code" :src="authImg">
+        </button>
       </section>
-      <section v-if="needWhat.smsCode" class="input_container" id="smsCodeContainer">
+      <section v-if="InputNeed.SMS_CODE" class="input_container" id="smsCodeContainer">
         <div class="image_in_input">
           <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-login-security"></use></svg>
         </div>
@@ -34,12 +34,12 @@
         <div class="image_in_input">
           <svg class="s_svg clear-icon" v-show="smsCode" @click="clearInput('smsCode')"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-login-clear"></use></svg>
         </div>
-        <button class="sms_code_get">获取验证码</button>
+        <button @click.prevent="getSmsCode" class="sms_code_get" :disabled="computedTime">{{ computedTime ? computedTime+"s" : "获取验证码"}}</button>
       </section>
       <section class="hint_container"></section>
     </form>
     <section class="btn_container">
-      <button class="go_next_btn">绑定</button>
+      <button class="go_next_btn" :disabled="!canGoNext" @click.stop="goNext">{{ taskText }}</button>
     </section>
   </div>
 </template>
@@ -49,6 +49,8 @@ import { getValidationCode } from "src/service/account";
 import { checkPhoneIllegal } from "src/config/mUtils";
 import { VALIDATION_TYPE } from "src/constant/account.js";
 
+const IMG_PREFIX="data:image/jpeg;base64,";
+
 export default {
   data() {
     return {
@@ -56,13 +58,13 @@ export default {
       imgCode: null,
       smsCode: null,
       tokenId: null,
-      imgPrefix: "data:image/jpeg;base64,",
       authImg: null,
-      computedTime: null
+      computedTime: null,
+      lastPhoneNumber: null
     }
   },
 
-  props: ['needWhat'],
+  props: ['InputNeed','taskText'],
 
   methods: {
     clearInput(field) {
@@ -80,18 +82,100 @@ export default {
           break;
       }
     },
+    toggleTimer(seconds) {
+      this.computedTime = seconds;
+      this.timer = setInterval(() => {
+        if(this.computedTime != 0) {
+          this.computedTime--;
+        } else {
+          clearInterval(this.timer);
+          this.timer = null;
+          this.computedTime = null;
+        }
+      }, 1000)
+    },
+    goNext() {
+      this.$emit('doTask',{test: 'test'});
+    },
     async getImgCode() {
       if (!this.rightPhoneNumber) {
         this.$toast.text("请输入正确的手机号");
         return;
       }
-      let imgResult = await getValidationCode(this.phoneNumber,VALIDATION_TYPE.IMG_CODE,null,null,null);
+      let imgResult = await getValidationCode({
+        recv: this.phoneNumber,
+        validationType: VALIDATION_TYPE.IMG_CODE,
+        validation: {}
+      });
+      if(!imgResult || imgResult.hr != 0) {
+        return;
+      }
+      if(
+        imgResult.data == null ||
+        imgResult.data.code == null ||
+        imgResult.data.sessionId == null
+      ) {
+        this.$toast.text("服务器未返回数据");
+        this.authImg = this.tokenId = null;
+        return;
+      }
+      this.authImg = IMG_PREFIX + imgResult.data.code;
+      this.tokenId = imgResult.data.sessionId;
+    },
+    /**
+     * 有点问题,不知道怎么直接获得短信验证码
+     */
+    async getSmsCode() {
+      let validation = {};
+      if(this.InputNeed.IMG_CODE) {
+        validation = {
+          type: VALIDATION_TYPE.IMG_CODE,
+          sessionId: this.tokenId,
+          userInput: this.imgCode
+        }
+      }
+      let smsResult = await getValidationCode({
+        recv: this.phoneNumber,
+        validationType: VALIDATION_TYPE.SMS_CODE,
+        validation: validation
+      });
+      if(!smsResult || smsResult.hr != 0) {
+        return;
+      }
+      this.toggleTimer(60);
+      this.tokenId = smsResult.data.sessionId;
+      this.lastPhoneNumber = this.phoneNumber;
     }
   },
 
   computed: {
     rightPhoneNumber: function() {
       return checkPhoneIllegal(this.phoneNumber);
+    },
+    canGoNext: function() {
+      if(!this.rightPhoneNumber) {
+        return false;
+      }
+      if(this.InputNeed.IMG_CODE && !this.imgCode) {
+        return false;
+      }
+      if(this.InputNeed.SMS_CODE && !this.smsCode) {
+        return false;
+      }
+      return true;
+    }
+  },
+
+  watch: {
+    phoneNumber: function(){
+      if(!this.InputNeed.IMG_CODE) {
+        return;
+      }
+      this.authImg = null;
+      this.tokenId = null;
+      if(this.rightPhoneNumber) {
+        this.getImgCode();
+      }
     }
   }
 };
@@ -132,20 +216,19 @@ export default {
         width: 70%;
       }
       .img_code_input {
-        width: 45%;
+        width: 40%;
       }
       .sms_code_input {
         width: 40%;
       }
       .img_code_get {
         border-radius: 0.1rem;
-        background-color: #fff;
+        background-color: #ffffff;
         height: 100%;
-        width: 40%;
+        width: 30%;
         display: inline-block;
         .btn_txt {
           @include sc($fontSize24, #999999);
-          width: 10%;
           text-align: left;
           vertical-align: middle;
           margin-left: -5px;
@@ -153,6 +236,10 @@ export default {
         svg {
           @include wh(15%, 100%);
           vertical-align: middle;
+        }
+        .img_code {
+          width: 100%;
+          margin-top: 17%;
         }
       }
       .sms_code_get {
