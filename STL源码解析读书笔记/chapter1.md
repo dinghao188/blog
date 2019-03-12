@@ -7,7 +7,7 @@
 > 
 > [1.3 STL历史及版本](#13-STL历史及版本)
 > 
-> [1.4 STL头文件分布](#14-头文件及可链接目标文件的分布（书中没有）)
+> [1.4 STL头文件分布](#14-头文件及可链接目标文件的分布)
 
 ## 1.1 STL概论
 > *STL（Standard Template Libraries）标准模板库，因此STL的核心是模板、也就是泛型编程*
@@ -29,7 +29,7 @@
 * Rouge Wave实现版本
 * STL port实现版本
 * SGI STL:Silicon Graphics Computer Systems,Inc.公司发展。被gcc采用的版本。
-## 1.4 头文件及可链接目标文件的分布（书中没有）
+## 1.4 头文件及可链接目标文件的分布
 > *我使用的是Ubuntu 18.04版本的gcc，不同版本分布位置大体上都类似*
 * 头文件一般在**/usr/include/c++(或者g++)/**目录或者其子孙目录下，这些头文件大致可分为五种：
   * C++标准规范下的C头文件（无扩展名），如cstdio，cstring
