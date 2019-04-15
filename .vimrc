@@ -48,15 +48,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'chase/focuspoint-vim'
+" Plugin 'ntk148v/vim-horizon'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 " Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin 'nathanaelkane/vim-indent-guides'
 " Plugin 'derekwyatt/vim-fswitch'
-Plugin 'kshenoy/vim-signature'
+" Plugin 'kshenoy/vim-signature'
 " Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-Plugin 'majutsushi/tagbar'
+" Plugin 'majutsushi/tagbar'
 " Plugin 'vim-scripts/indexer.tar.gz'
 " Plugin 'vim-scripts/DfrankUtil'
 " Plugin 'vim-scripts/vimprj'
@@ -67,13 +67,15 @@ Plugin 'majutsushi/tagbar'
 " Plugin 'SirVer/ultisnips'
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'derekwyatt/vim-protodef'
-" Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " Plugin 'fholgado/minibufexpl.vim'
 " Plugin 'gcmt/wildfire.vim'
 " Plugin 'sjl/gundo.vim'
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'suan/vim-instant-markdown'
 " Plugin 'lilydjwg/fcitx.vim'
+" Plugin 'vim-latex/vim-latex'
+Plugin 'Valloric/YouCompleteMe'
 " 插件列表结束
 call vundle#end()
 filetype plugin indent on
@@ -102,60 +104,17 @@ nnoremap <Leader>kw <C-W>k
 nnoremap <Leader>jw <C-W>j
 " 定义快捷键在结对符之间跳转
 nmap <Leader>M %
+" 打开NerdTree
+map <C-n> :NERDTreeToggle <CR>
 " 快捷键设置[end----------------------------------------------]
 
 " 配色方案[start--------------------------------------------]
 set background=dark
-colorscheme focuspoint
+colorscheme murphy  
 " 配色方案[end----------------------------------------------]
 
 " vim-airline配置[start-------------------------------------] 
 let g:airline_powerline_fonts = 1 
+let g:airline_theme="tomorrow"
 let g:airline#extensions#tabline#enabled = 1
-nmap <tab> :tabnext <cr>
 " vim-airline配置[end---------------------------------------] 
-
-" tagbar配置[start------------------------------------------]
-" 设置 tagbar 子窗口的位置出现在主编辑区的左边
-let tagbar_left=1
-" 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
-nmap <F9> :TagbarToggle<CR>
-" 设置标签子窗口的宽度
-let tagbar_width=32
-" tagbar 子窗口中不显示冗余帮助信息
-let g:tagbar_compact=1
-" 设置 ctags 对哪些代码标识符生成标签
-let g:tagbar_type_cpp = {
-    \ 'kinds' : [
-         \ 'c:classes:0:1',
-         \ 'd:macros:0:1',
-         \ 'e:enumerators:0:0',
-         \ 'f:functions:0:1',
-         \ 'g:enumeration:0:1',
-         \ 'l:local:0:1',
-         \ 'm:members:0:1',
-         \ 'n:namespaces:0:1',
-         \ 'p:functions_prototypes:0:1',
-         \ 's:structs:0:1',
-         \ 't:typedefs:0:1',
-         \ 'u:unions:0:1',
-         \ 'v:global:0:1',
-         \ 'x:external:0:1'
-     \ ],
-     \ 'sro'        : '::',
-     \ 'kind2scope' : {
-         \ 'g' : 'enum',
-         \ 'n' : 'namespace',
-         \ 'c' : 'class',
-         \ 's' : 'struct',
-         \ 'u' : 'union'
-     \ },
-     \ 'scope2kind' : {
-         \ 'enum'      : 'g',
-         \ 'namespace' : 'n',
-         \ 'class'     : 'c',
-         \ 'struct'    : 's',
-         \ 'union'     : 'u'
-     \ }
-\ }
-" tagbar配置[end--------------------------------------------]
