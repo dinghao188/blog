@@ -90,7 +90,6 @@ set statusline+=%=%-14.(%l,%c%V%)\ %p%%
 "
 call plug#begin('~/.vim/plug')
 Plug 'airblade/vim-gitgutter'
-Plug 'alvan/vim-php-manual'
 Plug 'cespare/vim-toml'
 Plug 'godlygeek/tabular'
 Plug 'kien/ctrlp.vim'
@@ -104,7 +103,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'majutsushi/tagbar'
-Plug 'ycm-core/YouCompleteMe'
+Plug 'fatih/vim-go'
 call plug#end()
 
 let g:vim_markdown_folding_disabled = 1
@@ -118,6 +117,12 @@ let g:syntastic_quiet_messages = { "level": "errors" }
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
+"
+" go-vim
+"
+let g:go_version_warning = 0
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
 
 "
 " NERDTree
