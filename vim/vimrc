@@ -1,4 +1,4 @@
-" ____    ____  __   _______   _______ 
+"_  ___    ____  __   _______   _______ 
 " \   \  /   / |  | |       \ |   ____|
 "  \   \/   /  |  | |  .--.  ||  |__   
 "   \      /   |  | |  |  |  ||   __|  
@@ -8,7 +8,8 @@
 
 autocmd BufNewFile *.lua,*.sh,*.php 0r !~/.vim/template.sh %:e
 autocmd BufRead,BufNewFile *.conf setfiletype conf
-autocmd BufRead *.php set includeexpr=substitute(v:fname,'\\\','/','g') autocmd BufRead *.php set include=^#\s*use
+autocmd BufRead *.php set includeexpr=substitute(v:fname,'\\\','/','g')
+autocmd BufRead *.php set include=^#\s*use
 autocmd BufRead *.php set suffixesadd+=.php
 autocmd BufWinEnter *.volt,*.tp,*.mako set filetype=html
 autocmd BufWinEnter *.sls set filetype=yaml
@@ -38,6 +39,9 @@ nmap <leader>s :set filetype=sh         <CR>
 nmap <leader>t :set filetype=txt        <CR>
 nmap <leader>v :set filetype=vim        <CR>
 nmap <leader>y :set filetype=python     <CR>
+
+nmap <Tab> :tabn <CR>
+
 set ambiwidth=double
 set autoread
 set autowriteall
@@ -75,7 +79,6 @@ set vb t_vb=                                " Turn off bi-sound of vim.
 set wildignore+=*.git\\*,*.tgz,*.zip,*.url,*.pyc,*.class
 syntax on
 
-"
 " statusline
 "
 set laststatus=2
@@ -92,7 +95,6 @@ call plug#begin('~/.vim/plug')
 Plug 'airblade/vim-gitgutter'
 Plug 'cespare/vim-toml'
 Plug 'godlygeek/tabular'
-Plug 'kien/ctrlp.vim'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'plasticboy/vim-markdown'
 Plug 'roxma/vim-paste-easy'
@@ -101,9 +103,11 @@ Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-commentary'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'majutsushi/tagbar'
-Plug 'fatih/vim-go'
+Plug 'kien/ctrlp.vim'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 let g:vim_markdown_folding_disabled = 1
@@ -116,13 +120,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_quiet_messages = { "level": "errors" }
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-"
-" go-vim
-"
-let g:go_version_warning = 0
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
 
 "
 " NERDTree
@@ -166,13 +163,11 @@ let g:NERDTreeIndicatorMapCustom = {
             \ "Unknown"   : "?" 
             \ }
 
+" 
+" CtrlP配置
 "
-" ctrlp
-"
-" Making CtrlP.vim load 100x faster — A Tiny Piece of Vim — Medm 
-" https://medium.com/a-tiny-piece-of-vim/making-ctrlp-vim-load-100x-faster-7a722fae7df6#.emcvo89nx
 let g:ctrlp_user_command = [
-            \ '.git/', 
+            \ '.git/',
             \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
             \ ]
 let g:ctrlp_match_window       = 'bottom,order:btt,min:5,max:5,results:10'
@@ -189,11 +184,19 @@ let g:timeStampLeader = 'version'
 "
 " vim-airline
 "
-set laststatus=2  "永远显示状态栏
-let g:airline_powerline_fonts = 1  "支持 powerline 字体
-let g:airline#extensions#tabline#enabled = 1 " 显示窗口tab和buffer
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
 "
 " tagbar
 "
 nmap <F8> :TagbarToggle<CR>
+
+"
+" ycm
+"
+let g:ycm_global_ycm_extra_conf='~/.vim/plug/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_key_invoke_completion = '<C-n>'
+let g:ycm_auto_trigger=1
+let g:ycm_seed_identifiers_with_syntax=1
+nnoremap <C-g> :YcmCompleter GoToDefinitionElseDeclaration<CR>
