@@ -25,20 +25,6 @@ let $VIMFILES=$HOME.'/.vim'
 let @w = 'x~n'
 nmap <c-l> <esc>:noh<cr>
 nmap <leader>3 :NERDTreeFind<cr>
-nmap <leader>a :set filetype=awk        <CR>
-nmap <leader>c :set filetype=css        <CR>
-nmap <leader>d :set filetype=htmldjango <CR>
-nmap <leader>e :set filetype=sed        <CR>
-nmap <leader>g :set filetype=go         <CR>
-nmap <leader>h :set filetype=html       <CR>
-nmap <leader>j :set filetype=javascript <CR>
-nmap <leader>l :set filetype=lua        <CR>
-nmap <leader>m :set filetype=markdown   <CR>
-nmap <leader>p :set filetype=php        <CR>
-nmap <leader>s :set filetype=sh         <CR>
-nmap <leader>t :set filetype=txt        <CR>
-nmap <leader>v :set filetype=vim        <CR>
-nmap <leader>y :set filetype=python     <CR>
 
 nmap <Tab> :tabn <CR>
 
@@ -69,6 +55,7 @@ set shell=/bin/bash
 set nocompatible               
 set showcmd                                 " Show cmd in vim-cmdline.
 set t_Co=256                                " Make vim look better in putty.
+set background=dark
 set textwidth=0
 set undodir=~/.vimtmp/undodir 
             \ directory=~/.vimtmp/directory 
@@ -77,6 +64,7 @@ set undodir=~/.vimtmp/undodir
             \ undofile 
 set vb t_vb=                                " Turn off bi-sound of vim.
 set wildignore+=*.git\\*,*.tgz,*.zip,*.url,*.pyc,*.class
+set completeopt-=preview
 syntax on
 
 " statusline
@@ -104,11 +92,14 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-airline/vim-airline'
 Plug 'majutsushi/tagbar'
-Plug 'kien/ctrlp.vim'
+Plug 'kien/ctrlp'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'jiangmiao/auto-pairs'
+Plug 'gmoe/vim-espresso'
 call plug#end()
+colorscheme espresso
+
 
 let g:vim_markdown_folding_disabled = 1
 let g:gitgutter_max_signs=10000
@@ -199,4 +190,4 @@ let g:ycm_global_ycm_extra_conf='~/.vim/plug/YouCompleteMe/cpp/ycm/.ycm_extra_co
 let g:ycm_key_invoke_completion = '<C-n>'
 let g:ycm_auto_trigger=1
 let g:ycm_seed_identifiers_with_syntax=1
-nnoremap <C-g> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>g :YcmCompleter GoTo<CR>
