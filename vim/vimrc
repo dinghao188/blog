@@ -34,15 +34,15 @@ set t_Co=256                "    256色显示
 
 " 插件设置 {{{
 call plug#begin(fnamemodify($MYVIMRC,':p:h').'/plug')
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 Plug 'godlygeek/tabular'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf'
+" Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
-Plug 'Siphalor/vim-atomified'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'ervandew/supertab'
 call plug#end()
-colorscheme atomified
 
 "
 " vim-airline
