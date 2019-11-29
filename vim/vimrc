@@ -140,8 +140,10 @@ nnoremap <leader>q :q<cr>                   "    快速退出当前窗口或标�
 
 " gui版本专用设置 {{{
 if has('gui')
-	set guifont=Powerline_Consolas:h12:cANSI    "    设置单字符宽度字体
-    set guifontwide=黑体:h12:cGB2312            "    设置双字符宽度字体
+	" set guifont=Powerline_Consolas:h12:cANSI    "    设置单字符宽度字体(win)
+    " set guifontwide=黑体:h12:cGB2312            "    设置双字符宽度字体(win)
+	set guifont=Powerline_Consolas:h12:cANSI    "    设置单字符宽度字体(linux)
+    set guifontwide=黑体:h12:cGB2312            "    设置双字符宽度字体(linux)
     set lines=999 columns=999                   "    最大化窗口
 	set guioptions-=T                           "    关闭工具栏
     set guioptions-=m                           "    关闭菜单栏
