@@ -1,48 +1,111 @@
 " 通用设置 {{{
 set encoding=utf-8
-filetype plugin indent on   "    打开基于文件类型的插件和缩进
-syntax enable               "    开启语法高亮
-syntax on                   "    允许自定义高亮方案
+let mapleader = ' '            "    设置<leader>键为<SPC>
+let maplocalleader = '\'       
+filetype plugin indent on      "    打开基于文件类型的插件和缩进
+syntax enable                  "    开启语法高亮
+syntax on                      "    允许自定义高亮方案
 
-set gcr=a:block-blinkon0    "    关闭光标闪烁
-set laststatus=2            "    总是显示状态栏
-set showcmd                 "    显示命令信息
-set number relativenumber   "    显示行号
-set cursorline cursorcolumn "    高亮当前行列
-set hlsearch                "    高亮显示搜索结果
+set gcr=a:block-blinkon400     "    设置光标闪烁
+set laststatus=2               "    总是显示状态栏
+set showcmd                    "    显示命令信息
+set number relativenumber      "    显示行号
+set cursorline cursorcolumn    "    高亮当前行列
+set hlsearch                   "    高亮显示搜索结果
 
-set expandtab               "    用空格显示制表符
-set tabstop=4               "    设置编辑时制表符占用4个空格
-set shiftwidth=4            "    设置格式化时制表符占用4个空格
+set expandtab                  "    用空格显示制表符
+set tabstop=4                  "    设置编辑时制表符占用4个空格
+set shiftwidth=4               "    设置格式化时制表符占用4个空格
 set softtabstop=4
-set autoindent              "    自动缩进
+set autoindent                 "    自动缩进
 
-set incsearch               "    开启实时搜索
-set noignorecase            "    搜索时大小写敏感
-set nocompatible            "    关闭兼容模式
-set bs=start,indent,eol     "    设置退格键的行为
-set wildmenu                "    vim命令行模式智能补全
+set incsearch                  "    开启实时搜索
+set noignorecase               "    搜索时大小写敏感
+set nocompatible               "    关闭兼容模式
+set bs=start,indent,eol        "    设置退格键的行为
+set wildmenu                   "    vim命令行模式智能补全
 
-set nobackup                "    关闭自动备份
-set noswapfile              "    不生成交换文件
-set noautowrite             "    关闭自动保存
-set foldmethod=marker       "    根据折叠代码
+set nobackup                   "    关闭自动备份
+set noswapfile                 "    不生成交换文件
+set noautowrite                "    关闭自动保存
+set foldmethod=marker          "    根据标记折叠代码
 
-colorscheme desert          "    设置颜色主题
-set t_Co=256                "    256色显示
+colorscheme desert             "    设置颜色主题
+set t_Co=256                   "    256色显示
+
+"------------------------下 面 是 cscope 的 设置---------------------------------------
+if has("cscope")
+    set csto=0
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+
+    nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-_>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+
+	" Using 'CTRL-spacebar' then a search type makes the vim window
+	" split horizontally, with search result displayed in
+	" the new window.
+
+	nmap <C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-Space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>a :scs find a <C-R>=expand("<cword>")<CR><CR>
+
+	" Hitting CTRL-space *twice* before the search type does a vertical
+	" split instead of a horizontal one
+
+	nmap <C-Space><C-Space>s
+		\:vert scs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space><C-Space>g
+		\:vert scs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space><C-Space>c
+		\:vert scs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space><C-Space>t
+		\:vert scs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space><C-Space>e
+		\:vert scs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space><C-Space>i
+		\:vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-Space><C-Space>d
+		\:vert scs find d <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space><C-Space>a
+		\:vert scs find a <C-R>=expand("<cword>")<CR><CR>
+endif
+"--------------------------------------------------------------------------------------
 " }}}
 
 " 插件设置 {{{
 call plug#begin(fnamemodify($MYVIMRC,':p:h').'/plug')
-" Plug 'vim-airline/vim-airline'
+Plug 'fatih/vim-go'
+Plug 'vim-airline/vim-airline'
 Plug 'godlygeek/tabular'
-" Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'ervandew/supertab'
 call plug#end()
+
 
 "
 " vim-airline
@@ -54,26 +117,35 @@ let g:airline_powerline_fonts=1
 "
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <F2> :NERDTree<CR>
 
 " 
 " tagbar
 "
 nnoremap <F8> :TagbarToggle<CR>
+
+"
+" fzf
+"
+nnoremap <C-P> :Files<CR>
 " }}}
 
 " 快捷键设置 {{{
-nnoremap <leader>ev :e $MYVIMRC<cr>
-nnoremap <leader>lv :source $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>         "    快速打开配置文件
+nnoremap <leader>lv :source $MYVIMRC<cr>    "    快速加载配置文件
+
+nnoremap <leader>w :w<cr>                   "    快速保存文件
+nnoremap <leader>q :q<cr>                   "    快速退出当前窗口或标签
 " }}}
 
-" gui版专用设置 {{{
+" gui版本专用设置 {{{
 if has('gui')
-	set guifont=Powerline_Consolas:h12:cANSI "    设置单字符宽度字体
-    set guifontwide=黑体:h12:cGB2312         "    设置双字符宽度字体
-    set lines=999 columns=999                "    最大化窗口
-	set guioptions-=T                        "    关闭工具栏
-    set guioptions-=m                        "    关闭菜单栏
+	set guifont=Powerline_Consolas:h12:cANSI    "    设置单字符宽度字体
+    set guifontwide=黑体:h12:cGB2312            "    设置双字符宽度字体
+    set lines=999 columns=999                   "    最大化窗口
+	set guioptions-=T                           "    关闭工具栏
+    set guioptions-=m                           "    关闭菜单栏
+    "colorscheme atomified                      "    gui主题
     " 触发菜单栏的函数
     function! ToggleMenu()
         if match(&guioptions,'m') == -1
@@ -88,6 +160,9 @@ endif
 
 " windows专用设置 {{{
 if has('win32')
-    set ignorecase                           "   关闭大小写敏感
+    au GUIEnter * simalt ~x                      "   最大化窗口
+    set ignorecase                               "   关闭大小写敏感
+    "set shell=E:\Git\bin\bash                   "   使用bash代替cmd命令行工具 
+    "set shellslash                              "   避免字符串转义时出现错误
 endif
 " }}}
