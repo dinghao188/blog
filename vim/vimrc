@@ -142,8 +142,8 @@ nnoremap <leader>q :q<cr>                   "    快速退出当前窗口或标�
 if has('gui')
 	" set guifont=Powerline_Consolas:h12:cANSI    "    设置单字符宽度字体(win)
     " set guifontwide=黑体:h12:cGB2312            "    设置双字符宽度字体(win)
-	set guifont=Powerline_Consolas:h12:cANSI    "    设置单字符宽度字体(linux)
-    set guifontwide=黑体:h12:cGB2312            "    设置双字符宽度字体(linux)
+	set guifont=Source\ Code\ Pro\ 13           "    设置单字符宽度字体(linux)
+    set guifontwide=文泉译微米黑\ 13            "    设置双字符宽度字体(linux)
     set lines=999 columns=999                   "    最大化窗口
 	set guioptions-=T                           "    关闭工具栏
     set guioptions-=m                           "    关闭菜单栏
