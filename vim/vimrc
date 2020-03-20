@@ -72,11 +72,11 @@ nnoremap <C-P> :Files<CR>
 " }}}
 
 " 快捷键设置 {{{
-nnoremap <leader>ev :e $MYVIMRC<cr>         "    快速打开配置文件
-nnoremap <leader>lv :source $MYVIMRC<cr>    "    快速加载配置文件
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>lv :source $MYVIMRC<cr>
 
-nnoremap <leader>w :w<cr>                   "    快速保存文件
-nnoremap <leader>q :q<cr>                   "    快速退出当前窗口或标签
+nnoremap <leader>w :w<cr>
+nnoremap <leader>q :q<cr>
 " }}}
 
 " gui版本专用设置 {{{
