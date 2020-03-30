@@ -40,10 +40,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
-Plug 'ervandew/supertab'
 Plug 'dylnmc/novum.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scrooloose/nerdcommenter'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
 colorscheme novum
 
@@ -60,15 +60,6 @@ let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 nnoremap <F2> :NERDTree<CR>
 
-" 
-" tagbar
-"
-nnoremap <F8> :TagbarToggle<CR>
-
-"
-" fzf
-"
-nnoremap <C-P> :Files<CR>
 " }}}
 
 " 快捷键设置 {{{
@@ -77,6 +68,9 @@ nnoremap <leader>lv :source $MYVIMRC<cr>
 
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
+
+nnoremap <TAB> za
+nnoremap <leader><TAB> zA
 " }}}
 
 " gui版本专用设置 {{{
