@@ -4,7 +4,7 @@
 
 ### 1.1 condition_variable
 
-- `condition_variable`在调用`wait(unique_lock\<mutex\>&)`函数时，会把传入的锁变量先进行unlock(),并且在退出时会重新把锁变量lock()。对于另一个重载的wait函数也是如此。因此我们可以用下面的方式实现一个"生产者-消费者"模型。
+- `condition_variable`在调用`wait(unique_lock<mutex>&)`函数时，会把传入的锁变量先进行unlock(),并且在退出时会重新把锁变量lock()。对于另一个重载的wait函数也是如此。因此我们可以用下面的方式实现一个"生产者-消费者"模型。
 
 ```cpp
 mutex m;
