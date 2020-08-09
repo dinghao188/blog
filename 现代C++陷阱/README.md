@@ -130,3 +130,18 @@ for (const pair<string, int> &item : m) {  // 这里如果不加const，会编�
 ```
 
 看起来不错哈，但是实际上由于map的键值保存的是const类型的变量，所以上面的语句会产生大量的无用复制，也就是用pair<const string, int>&来构造一个`临时的pair<string, int>对象`，所以前面说必须要加const，因为右值没法赋值给左值引用，但是右值可以赋值给常值左值引用（可以去了解下左值引用和右值引用）。实际上我们应该用`const pair<const string, int> &item : m`，或者就用`const auto &item : m`。看吧，auto帮我们省了不少事呢!
+
+## 3. delete 和 delete[]
+
+我以前习惯的是先判断指针是否为空再进行delete，实际上完全没有必要。只需要delete之后记得把指针置为空就行了。
+
+```cpp
+struct A {
+    char *p = nullptr;
+
+    ~A() {
+        delete p;
+        p = nullptr;
+    }
+};
+```
